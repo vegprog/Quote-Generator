@@ -1,8 +1,20 @@
 // Get elements
+const quoteContainer = document.getElementById('quote-container');
+const loader = document.getElementById('loader');
 const authorText= document.getElementById('author');
 const quoteText= document.getElementById('quote');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
+
+function loading() {
+    quoteContainer.hidden = true;
+    loader.hidden = false;
+}
+
+function completed() {
+    loader.hidden = true;
+    quoteContainer.hidden = false;
+}
 
 
 // Setup quotes array
@@ -10,6 +22,7 @@ let apiQuotes = [];
 
 // Show new quote
 function newQuote() {
+    completed();
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
 
     // If Author and / or Text empty then populate text with default
@@ -22,6 +35,7 @@ function newQuote() {
 
 
 async function getQuotes() {
+    loading();
     const apiUrl = 'https://jacintodesign.github.io/quotes-api/data/quotes.json';
     try {
         const response = await fetch(apiUrl);
